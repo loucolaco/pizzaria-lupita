@@ -1,562 +1,290 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUPITA — Lisbon's Most Obsessed-Over Pizza</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Otimização de carregamento do vídeo -->
-    <link rel="preload" href="videolupita.mp4" as="video" type="video/mp4">
+<!DOCTYPE html> 
+<html lang="pt"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>LUPITA — Lisbon's Most Obsessed-Over Pizza</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet"> 
+     
+    <style> 
+        /* DESIGN SYSTEM */ 
+        :root { 
+            --bg-deep-charcoal: #1a1a1a; 
+            --text-broken-white: #f5f0e8; 
+            --accent-fire-orange: #E8593C; 
+            --accent-warm-gold: #D4A842; 
+            --near-black: #111111; 
+            --font-headline: 'Bebas Neue', sans-serif; 
+            --font-body: 'Inter', sans-serif; 
+            --container-width: 1200px; 
+            --transition: all 0.3s ease; 
+        } 
 
-    <style>
-        /* DESIGN SYSTEM */
-        :root {
-            --bg-deep-charcoal: #1a1a1a;
-            --text-broken-white: #f5f0e8;
-            --accent-fire-orange: #E8593C;
-            --accent-warm-gold: #D4A842;
-            --near-black: #111111;
-            --font-headline: 'Bebas Neue', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --container-width: 1200px;
-            --transition: all 0.3s ease;
-        }
+        /* RESET & BASE */ 
+        * { margin: 0; padding: 0; box-sizing: border-box; } 
+        body {  
+            background-color: var(--bg-deep-charcoal);  
+            color: var(--text-broken-white);  
+            font-family: var(--font-body); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        } 
+         
+        h1, h2, h3 { font-family: var(--font-headline); letter-spacing: 1px; } 
+        a { text-decoration: none; color: inherit; transition: var(--transition); } 
+        section { padding: 80px 20px; } 
 
-        /* RESET & BASE */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: var(--bg-deep-charcoal); 
-            color: var(--text-broken-white); 
-            font-family: var(--font-body);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        h1, h2, h3 { font-family: var(--font-headline); letter-spacing: 1px; }
-        a { text-decoration: none; color: inherit; transition: var(--transition); }
-        section { padding: 80px 20px; }
+        /* NAV STICKY */ 
+        nav { 
+            position: fixed; top: 0; width: 100%; z-index: 1000; 
+            padding: 20px; display: flex; justify-content: space-between; align-items: center; 
+            transition: var(--transition); 
+        } 
+        nav.scrolled { background: rgba(17, 17, 17, 0.95); border-bottom: 1px solid #333; padding: 12px 20px; } 
+        .logo { font-family: var(--font-headline); font-size: 2rem; color: var(--accent-fire-orange); } 
+        .nav-links { display: flex; gap: 30px; } 
+        .nav-links a:hover { color: var(--accent-fire-orange); } 
+         
+        .lang-switcher { display: flex; gap: 10px; margin-right: 20px; font-family: var(--font-headline); cursor: pointer; } 
+        .lang-btn { opacity: 0.5; transition: var(--transition); } 
+        .lang-btn.active { opacity: 1; color: var(--accent-fire-orange); } 
+        .nav-right { display: flex; align-items: center; } 
+        .btn-delivery { background: var(--accent-fire-orange); color: white; padding: 10px 20px; font-weight: bold; border-radius: 4px; } 
 
-        /* NAV STICKY */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            padding: 20px; display: flex; justify-content: space-between; align-items: center;
-            transition: var(--transition);
-        }
-        nav.scrolled { background: rgba(17, 17, 17, 0.95); border-bottom: 1px solid #333; padding: 12px 20px; }
-        .logo { font-family: var(--font-headline); font-size: 2rem; color: var(--accent-fire-orange); }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a:hover { color: var(--accent-fire-orange); }
-        
-        .lang-switcher { display: flex; gap: 10px; margin-right: 20px; font-family: var(--font-headline); cursor: pointer; }
-        .lang-btn { opacity: 0.5; transition: var(--transition); }
-        .lang-btn.active { opacity: 1; color: var(--accent-fire-orange); }
-        .nav-right { display: flex; align-items: center; }
-        .btn-delivery { background: var(--accent-fire-orange); color: white; padding: 10px 20px; font-weight: bold; border-radius: 4px; }
+        /* HERO SECTION COM VÍDEO */ 
+        .hero { 
+            height: 100dvh; 
+            width: 100%; 
+            position: relative; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            text-align: center; 
+            overflow: hidden; 
+        } 
+        #hero-video { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            min-width: 100%; min-height: 100%; 
+            width: auto; height: auto; 
+            z-index: -2; 
+            transform: translate(-50%, -50%); 
+            object-fit: cover; 
+        } 
+        .hero-overlay { 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: -1; 
+        } 
+        .hero h1 { font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 20px; } 
+        .hero p { max-width: 520px; font-size: 18px; margin-bottom: 30px; opacity: 0.9; } 
+        .awards-strip { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; font-size: 0.9rem; } 
+        .award-item { background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 20px; border: 1px solid rgba(212,168,66,0.3); backdrop-filter: blur(5px); transition: var(--transition); } 
+        .award-item:hover { background: rgba(255,255,255,0.15); border-color: var(--accent-fire-orange); } 
+        .cta-group { display: flex; gap: 15px; } 
+        .btn-primary { background: var(--accent-fire-orange); padding: 15px 30px; font-weight: bold; border: none; cursor: pointer; color: white; } 
+        .btn-secondary { border: 1px solid var(--text-broken-white); padding: 15px 30px; backdrop-filter: blur(5px); } 
 
-        /* HERO SECTION COM VÍDEO */
-        .hero {
-            height: 100dvh;
-            width: 100%;
-            position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center;
-            overflow: hidden;
-        }
-        #hero-video {
-            position: absolute;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            z-index: -2;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
-        .hero h1 { font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 20px; }
-        .hero p { max-width: 520px; font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
-        .awards-strip { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; font-size: 0.9rem; }
-        .award-item { background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 20px; border: 1px solid rgba(212,168,66,0.3); backdrop-filter: blur(5px); transition: var(--transition); }
-        .award-item:hover { background: rgba(255,255,255,0.15); border-color: var(--accent-fire-orange); }
-        .cta-group { display: flex; gap: 15px; }
-        .btn-primary { background: var(--accent-fire-orange); padding: 15px 30px; font-weight: bold; border: none; cursor: pointer; color: white; }
-        .btn-secondary { border: 1px solid var(--text-broken-white); padding: 15px 30px; backdrop-filter: blur(5px); }
+        /* SOCIAL PROOF */ 
+        .social-proof { background: var(--near-black); } 
+        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: var(--container-width); margin: 40px auto; } 
+        .proof-card { padding: 30px; border-left: 4px solid var(--accent-warm-gold); background: rgba(255,255,255,0.02); } 
+        .proof-card h3 { font-size: 1.5rem; color: var(--accent-fire-orange); margin-bottom: 10px; } 
 
-        /* SOCIAL PROOF */
-        .social-proof { background: var(--near-black); }
-        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: var(--container-width); margin: 40px auto; }
-        .proof-card { padding: 30px; border-left: 4px solid var(--accent-warm-gold); background: rgba(255,255,255,0.02); }
-        .proof-card h3 { font-size: 1.5rem; color: var(--accent-fire-orange); margin-bottom: 10px; }
+        /* TICKER */ 
+        .ticker-wrap { width: 100%; overflow: hidden; background: var(--accent-fire-orange); padding: 15px 0; margin-top: 50px; } 
+        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; } 
+        .ticker span { font-family: var(--font-headline); font-size: 1.5rem; padding: 0 40px; color: var(--near-black); } 
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } } 
 
-        /* TICKER */
-        .ticker-wrap { width: 100%; overflow: hidden; background: var(--accent-fire-orange); padding: 15px 0; margin-top: 50px; }
-        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; }
-        .ticker span { font-family: var(--font-headline); font-size: 1.5rem; padding: 0 40px; color: var(--near-black); }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* MENU SECTION */ 
+        .menu-filter { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; } 
+        .filter-btn { background: none; border: none; color: var(--text-broken-white); font-family: var(--font-headline); font-size: 1.5rem; cursor: pointer; opacity: 0.5; } 
+        .filter-btn.active { opacity: 1; color: var(--accent-fire-orange); border-bottom: 2px solid var(--accent-fire-orange); } 
+        .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; max-width: var(--container-width); margin: auto; } 
+        .menu-grid.active { display: grid; } 
+        .pizza-card { background: rgba(255,255,255,0.03); position: relative; transition: var(--transition); border-radius: 12px; overflow: hidden; } 
+        .pizza-card:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(232,89,60,0.2); } 
+        .pizza-card .pizza-img { width: 100%; height: 550px; object-fit: cover; display: block; } 
+        .pizza-card .pizza-content { padding: 25px; min-height: 180px; } 
 
-        /* MENU SECTION */
-        .menu-filter { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; }
-        .filter-btn { background: none; border: none; color: var(--text-broken-white); font-family: var(--font-headline); font-size: 1.5rem; cursor: pointer; opacity: 0.5; }
-        .filter-btn.active { opacity: 1; color: var(--accent-fire-orange); border-bottom: 2px solid var(--accent-fire-orange); }
-        .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; max-width: var(--container-width); margin: auto; }
-        .menu-grid.active { display: grid; }
-        .pizza-card { background: rgba(255,255,255,0.03); position: relative; transition: var(--transition); border-radius: 12px; overflow: hidden; }
-        .pizza-card:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(232,89,60,0.2); }
-        .pizza-card .pizza-img { width: 100%; height: 550px; object-fit: cover; display: block; }
-        .pizza-card .pizza-content { padding: 25px; min-height: 180px; }
+        /* STORY SECTION */ 
+        .story-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; max-width: var(--container-width); margin: auto; align-items: center; } 
+        .story-img {  
+            width: 100%; aspect-ratio: 3/4; background: #222; box-shadow: 20px 20px 0 var(--accent-fire-orange); 
+            background-image: url('IMG_7187.jpeg'); 
+            background-size: cover; background-position: center; 
+        } 
+        .pull-quote { font-style: italic; font-size: 1.8rem; border-left: 4px solid var(--accent-fire-orange); padding-left: 20px; margin: 30px 0; color: var(--accent-warm-gold); } 
 
-        /* STORY SECTION */
-        .story-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; max-width: var(--container-width); margin: auto; align-items: center; }
-        .story-img { 
-            width: 100%; aspect-ratio: 3/4; background: #222; box-shadow: 20px 20px 0 var(--accent-fire-orange);
-            background-image: url('IMG_7187.jpeg');
-            background-size: cover; background-position: center;
-        }
-        .pull-quote { font-style: italic; font-size: 1.8rem; border-left: 4px solid var(--accent-fire-orange); padding-left: 20px; margin: 30px 0; color: var(--accent-warm-gold); }
+        /* LOCATIONS */ 
+        .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: var(--container-width); margin: auto; } 
+        .loc-card { background: rgba(255,255,255,0.03); border-top: 4px solid var(--accent-fire-orange); border-radius: 12px; overflow: hidden; } 
+        .loc-img { width: 100%; height: 300px; object-fit: cover; } 
+        .loc-content { padding: 30px; } 
 
-        /* LOCATIONS */
-        .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: var(--container-width); margin: auto; }
-        .loc-card { background: rgba(255,255,255,0.03); border-top: 4px solid var(--accent-fire-orange); border-radius: 12px; overflow: hidden; }
-        .loc-img { width: 100%; height: 300px; object-fit: cover; }
-        .loc-content { padding: 30px; }
+        /* FOOTER */ 
+        footer { background: var(--near-black); padding: 80px 20px 40px; border-top: 1px solid #222; text-align: center; } 
+        .footer-bottom { margin-top: 60px; padding-top: 20px; border-top: 1px solid #222; font-size: 0.8rem; opacity: 0.6; } 
 
-        /* FOOTER */
-        footer { background: var(--near-black); padding: 80px 20px 40px; border-top: 1px solid #222; text-align: center; }
-        .footer-bottom { margin-top: 60px; padding-top: 20px; border-top: 1px solid #222; font-size: 0.8rem; opacity: 0.6; }
+        @media (max-width: 768px) { 
+            .nav-links { display: none; } 
+            .grid-2x2, .locations-grid, .story-grid { grid-template-columns: 1fr; } 
+            .hero h1 { font-size: 4rem; } 
+            .pizza-card .pizza-img { height: 400px; } 
+        } 
+    </style> 
+</head> 
+<body> 
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .grid-2x2, .locations-grid, .story-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 4rem; }
-            .pizza-card .pizza-img { height: 400px; }
-        }
-    </style>
-</head>
-<body>
+    <nav id="navbar"> 
+        <div class="logo">LUPITA</div> 
+        <div class="nav-links"> 
+            <a href="#home" class="lang" data-pt="Início" data-en="Home">Home</a> 
+            <a href="#menu" class="lang" data-pt="Pizzas" data-en="Pizzas">Pizzas</a> 
+            <a href="#story" class="lang" data-pt="História" data-en="Story">Story</a> 
+            <a href="#locations" class="lang" data-pt="Onde Estamos" data-en="Find Us">Find Us</a> 
+        </div> 
+        <div class="nav-right"> 
+            <div class="lang-switcher"> 
+                <span class="lang-btn active" onclick="setLanguage('en')">EN</span> 
+                <span style="opacity:0.3">|</span> 
+                <span class="lang-btn" onclick="setLanguage('pt')">PT</span> 
+            </div> 
+            <a href="https://www.ubereats.com/pt-en/store/lupita-cais-do-sodre/cmuETQm-TIaf5rz35pa6mw?diningMode=DELIVERY&sc=SEARCH_SUGGESTION" target="_blank" class="btn-delivery lang" data-pt="Pedir Entrega" data-en="Order Delivery">Order Delivery</a> 
+        </div> 
+    </nav> 
 
-    <nav id="navbar">
-        <div class="logo">LUPITA</div>
-        <div class="nav-links">
-            <a href="#home" class="lang" data-pt="Início" data-en="Home">Home</a>
-            <a href="#menu" class="lang" data-pt="Pizzas" data-en="Pizzas">Pizzas</a>
-            <a href="#story" class="lang" data-pt="História" data-en="Story">Story</a>
-            <a href="#locations" class="lang" data-pt="Onde Estamos" data-en="Find Us">Find Us</a>
-        </div>
-        <div class="nav-right">
-            <div class="lang-switcher">
-                <span class="lang-btn active" onclick="setLanguage('en')">EN</span>
-                <span style="opacity:0.3">|</span>
-                <span class="lang-btn" onclick="setLanguage('pt')">PT</span>
-            </div>
-            <a href="https://www.ubereats.com/pt-en/store/lupita-cais-do-sodre/cmuETQm-TIaf5rz35pa6mw?diningMode=DELIVERY&sc=SEARCH_SUGGESTION" target="_blank" class="btn-delivery lang" data-pt="Pedir Entrega" data-en="Order Delivery">Order Delivery</a>
-        </div>
-    </nav>
+    <section class="hero" id="home"> 
+        <video autoplay muted loop playsinline webkit-playsinline poster="IMG_7173.jpeg" id="hero-video"> 
+            <source src="videolupita.mp4" type="video/mp4"> 
+        </video> 
+        <div class="hero-overlay"></div> 
+        <h1 class="lang" data-pt="A PIZZA MAIS OBSESSIVA DE LISBOA" data-en="LISBON'S MOST OBSESSED-OVER PIZZA">LISBON'S MOST OBSESSED-OVER PIZZA</h1> 
+        <p class="lang" data-pt="Massa de fermentação natural. 90 segundos no forno. Top 50 na Europa." data-en="Naturally fermented dough. 90 seconds in the oven. Ranked Top 50 in Europe.">Naturally fermented dough. 90 seconds in the oven. Ranked Top 50 in Europe.</p> 
+        <div class="awards-strip"> 
+            <span class="award-item">🏆 Top 50 Pizzas Europa 2024</span> 
+            <a href="https://www.google.com/maps/place/Lupita/@38.7082606,-9.148636,17z/data=!4m6!3m5!1s0xd1935d933ad3a93:0x4b20d00d9c2d55ef!8m2!3d38.7082606!4d-9.1460611!16s%2Fg%2F11h_jz6zvs?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="award-item">⭐ 4.7 Reviews</a> 
+        </div> 
+        <div class="cta-group"> 
+            <a href="#locations" class="btn-primary lang" data-pt="ENCONTRAR" data-en="FIND US">FIND US</a> 
+            <a href="#menu" class="btn-secondary lang" data-pt="MENU" data-en="VIEW MENU">VIEW MENU</a> 
+        </div> 
+    </section> 
 
-    <section class="hero" id="home">
-        <!-- Adicionado preload="auto" e garantido o muted para compatibilidade com Mac/Safari -->
-        <video autoplay muted loop playsinline preload="auto" poster="IMG_7173.jpeg" id="hero-video">
-            <source src="videolupita.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <h1 class="lang" data-pt="A PIZZA MAIS OBSESSIVA DE LISBOA" data-en="LISBON'S MOST OBSESSED-OVER PIZZA">LISBON'S MOST OBSESSED-OVER PIZZA</h1>
-        <p class="lang" data-pt="Massa de fermentação natural. 90 segundos no forno. Top 50 na Europa." data-en="Naturally fermented dough. 90 seconds in the oven. Ranked Top 50 in Europe.">Naturally fermented dough. 90 seconds in the oven. Ranked Top 50 in Europe.</p>
-        <div class="awards-strip">
-            <span class="award-item">🏆 Top 50 Pizzas Europa 2024</span>
-            <a href="https://www.google.com/maps/place/Lupita/@38.7082606,-9.148636,17z/data=!4m6!3m5!1s0xd1935d933ad3a93:0x4b20d00d9c2d55ef!8m2!3d38.7082606!4d-9.1460611!16s%2Fg%2F11h_jz6zvs?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="award-item">⭐ 4.7 Reviews</a>
-        </div>
-        <div class="cta-group">
-            <a href="#locations" class="btn-primary lang" data-pt="ENCONTRAR" data-en="FIND US">FIND US</a>
-            <a href="#menu" class="btn-secondary lang" data-pt="MENU" data-en="VIEW MENU">VIEW MENU</a>
-        </div>
-    </section>
+    <section class="social-proof"> 
+        <h2 style="color: var(--accent-fire-orange); text-align: center; font-size: 3rem;" class="lang" data-pt="PORQUÊ A FILA VALE A PENA" data-en="WHY THE QUEUE IS WORTH IT">WHY THE QUEUE IS WORTH IT</h2> 
+        <div class="grid-2x2"> 
+            <div class="proof-card"> 
+                <h3>#45 IN EUROPE</h3> 
+                <p class="lang" data-pt="Top 50 Pizzas na Europa 2024." data-en="Top 50 Pizzas in Europe 2024.">Top 50 Pizzas in Europe 2024.</p> 
+            </div> 
+            <div class="proof-card"> 
+                <h3>TIME OUT</h3> 
+                <p class="lang" data-pt='"Uma das melhores pizzas de ananás do mundo."' data-en='"One of the best pineapple pizzas in the world."'>"One of the best pineapple pizzas in the world."</p> 
+            </div> 
+            <div class="proof-card"> 
+                <h3>3,300+ REVIEWS</h3> 
+                <p class="lang" data-pt="Classificação 4.7/5. O ponto de pizza mais amado de Lisboa." data-en="4.7/5 rating. The most loved pizza spot in Lisbon.">4.7/5 rating. The most loved pizza spot in Lisbon.</p> 
+            </div> 
+            <div class="proof-card"> 
+                <h3>ANTHONY FALCO</h3> 
+                <p class="lang" data-pt="Consultoria do lendário pizzaiolo da Roberta's NYC." data-en="Consultancy from the legendary Roberta's NYC pizzaiolo.">Consultancy from the legendary Roberta's NYC pizzaiolo.</p> 
+            </div> 
+        </div> 
+        <div class="ticker-wrap"> 
+            <div class="ticker"> 
+                <span>"Best pizza outside Italy" • "A fila vale a pena" • "The crust is magic" • "Best pizza outside Italy" • "A fila vale a pena" • "The crust is magic"</span> 
+            </div> 
+        </div> 
+    </section> 
 
-    <section class="social-proof">
-        <h2 style="color: var(--accent-fire-orange); text-align: center; font-size: 3rem;" class="lang" data-pt="PORQUÊ A FILA VALE A PENA" data-en="WHY THE QUEUE IS WORTH IT">WHY THE QUEUE IS WORTH IT</h2>
-        <div class="grid-2x2">
-            <div class="proof-card">
-                <h3>#45 IN EUROPE</h3>
-                <p class="lang" data-pt="Top 50 Pizzas na Europa 2024." data-en="Top 50 Pizzas in Europe 2024.">Top 50 Pizzas in Europe 2024.</p>
-            </div>
-            <div class="proof-card">
-                <h3>TIME OUT</h3>
-                <p class="lang" data-pt='"Uma das melhores pizzas de ananás do mundo."' data-en='"One of the best pineapple pizzas in the world."'>"One of the best pineapple pizzas in the world."</p>
-            </div>
-            <div class="proof-card">
-                <h3>3,300+ REVIEWS</h3>
-                <p class="lang" data-pt="Classificação 4.7/5. O ponto de pizza mais amado de Lisboa." data-en="4.7/5 rating. The most loved pizza spot in Lisbon.">4.7/5 rating. The most loved pizza spot in Lisbon.</p>
-            </div>
-            <div class="proof-card">
-                <h3>ANTHONY FALCO</h3>
-                <p class="lang" data-pt="Consultoria do lendário pizzaiolo da Roberta's NYC." data-en="Consultancy from the legendary Roberta's NYC pizzaiolo.">Consultancy from the legendary Roberta's NYC pizzaiolo.</p>
-            </div>
-        </div>
-        <div class="ticker-wrap">
-            <div class="ticker">
-                <span>"Best pizza outside Italy" • "A fila vale a pena" • "The crust is magic" • "Best pizza outside Italy" • "A fila vale a pena" • "The crust is magic"</span>
-            </div>
-        </div>
-    </section>
+    <section id="menu"> 
+        <h2 style="text-align: center; font-size: 4rem; margin-bottom: 40px;" class="lang" data-pt="AS PIZZAS" data-en="THE PIZZAS">THE PIZZAS</h2> 
+        <div class="menu-filter"> 
+            <button class="filter-btn active lang" data-pt="PIZZAS" data-en="PIZZAS" onclick="filterMenu('pizzas', this)">PIZZAS</button> 
+            <button class="filter-btn lang" data-pt="OUTROS" data-en="OTHERS" onclick="filterMenu('extras', this)">OTHERS</button> 
+        </div> 
 
-    <section id="menu">
-        <h2 style="text-align: center; font-size: 4rem; margin-bottom: 40px;" class="lang" data-pt="AS PIZZAS" data-en="THE PIZZAS">THE PIZZAS</h2>
-        <div class="menu-filter">
-            <button class="filter-btn active lang" data-pt="PIZZAS" data-en="PIZZAS" onclick="filterMenu('pizzas', this)">PIZZAS</button>
-            <button class="filter-btn lang" data-pt="OUTROS" data-en="OTHERS" onclick="filterMenu('extras', this)">OTHERS</button>
-        </div>
+        <div class="menu-grid active" id="pizzas-grid"> 
+            <div class="pizza-card"><img src="IMG_7173.jpeg" class="pizza-img"><div class="pizza-content"><h3>Margherita</h3><p class="lang" data-pt="Tomate, mozzarella fresca, manjericão e azeite." data-en="Tomato, fresh mozzarella, basil and olive oil.">Tomato, fresh mozzarella, basil and olive oil.</p></div></div> 
+            <div class="pizza-card"><img src="IMG_7174.jpeg" class="pizza-img"><div class="pizza-content"><h3>Peperoni</h3><p class="lang" data-pt="Mozzarella, peperoni artesanal e um toque picante." data-en="Mozzarella, artisanal pepperoni and a spicy touch.">Mozzarella, artisanal pepperoni and a spicy touch.</p></div></div> 
+            <div class="pizza-card"><img src="IMG_7175.jpeg" class="pizza-img"><div class="pizza-content"><h3>Marinara</h3><p class="lang" data-pt="Tomate, alho, orégãos e azeite extra virgem." data-en="Tomato, garlic, oregano and extra virgin olive oil.">Tomato, garlic, oregano and extra virgin olive oil.</p></div></div> 
+            <div class="pizza-card"><img src="IMG_7176.jpeg" class="pizza-img"><div class="pizza-content"><h3>Branca</h3><p class="lang" data-pt="Base de queijos selecionados e ervas frescas." data-en="Selected cheese base and fresh herbs.">Selected cheese base and fresh herbs.</p></div></div> 
+            <div class="pizza-card"><img src="IMG_7177.jpeg" class="pizza-img"><div class="pizza-content"><h3>Vegan</h3><p class="lang" data-pt="Ingredientes 100% vegetais e sazonais." data-en="100% plant-based and seasonal ingredients.">100% plant-based and seasonal ingredients.</p></div></div> 
+            <div class="pizza-card"><img src="IMG_7178.jpeg" class="pizza-img"><div class="pizza-content"><h3>Ananas</h3><p class="lang" data-pt="A famosa pizza de ananás premiada mundialmente." data-en="The famous world-award-winning pineapple pizza.">The famous world-award-winning pineapple pizza.</p></div></div> 
+            <div class="pizza-card"><img src="IMG_7179.jpeg" class="pizza-img"><div class="pizza-content"><h3>Cogumelos</h3></div></div> 
+            <div class="pizza-card"><img src="IMG_7180.jpeg" class="pizza-img"><div class="pizza-content"><h3>Spicy Amatriciana</h3></div></div> 
+            <div class="pizza-card"><img src="IMG_7181.jpeg" class="pizza-img"><div class="pizza-content"><h3>Courgette & Burrata</h3></div></div> 
+            <div class="pizza-card"><img src="IMG_7182.jpeg" class="pizza-img"><div class="pizza-content"><h3>Spicy Alla Vodka</h3></div></div> 
+        </div> 
 
-        <div class="menu-grid active" id="pizzas-grid">
-            <div class="pizza-card"><img src="IMG_7173.jpeg" class="pizza-img"><div class="pizza-content"><h3>Margherita</h3><p class="lang" data-pt="Tomate, mozzarella fresca, manjericão e azeite." data-en="Tomato, fresh mozzarella, basil and olive oil.">Tomato, fresh mozzarella, basil and olive oil.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7174.jpeg" class="pizza-img"><div class="pizza-content"><h3>Peperoni</h3><p class="lang" data-pt="Mozzarella, peperoni artesanal e um toque picante." data-en="Mozzarella, artisanal pepperoni and a spicy touch.">Mozzarella, artisanal pepperoni and a spicy touch.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7175.jpeg" class="pizza-img"><div class="pizza-content"><h3>Marinara</h3><p class="lang" data-pt="Tomate, alho, orégãos e azeite extra virgem." data-en="Tomato, garlic, oregano and extra virgin olive oil.">Tomato, garlic, oregano and extra virgin olive oil.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7176.jpeg" class="pizza-img"><div class="pizza-content"><h3>Branca</h3><p class="lang" data-pt="Base de queijos selecionados e ervas frescas." data-en="Selected cheese base and fresh herbs.">Selected cheese base and fresh herbs.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7177.jpeg" class="pizza-img"><div class="pizza-content"><h3>Vegan</h3><p class="lang" data-pt="Ingredientes 100% vegetais e sazonais." data-en="100% plant-based and seasonal ingredients.">100% plant-based and seasonal ingredients.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7178.jpeg" class="pizza-img"><div class="pizza-content"><h3>Ananas</h3><p class="lang" data-pt="A famosa pizza de ananás premiada mundialmente." data-en="The famous world-award-winning pineapple pizza.">The famous world-award-winning pineapple pizza.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7179.jpeg" class="pizza-img"><div class="pizza-content"><h3>Cogumelos</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7180.jpeg" class="pizza-img"><div class="pizza-content"><h3>Spicy Amatriciana</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7181.jpeg" class="pizza-img"><div class="pizza-content"><h3>Courgette & Burrata</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7182.jpeg" class="pizza-img"><div class="pizza-content"><h3>Spicy Alla Vodka</h3></div></div>
-        </div>
+        <div class="menu-grid" id="extras-grid"> 
+            <div class="pizza-card"><img src="IMG_7183.jpeg" class="pizza-img"><div class="pizza-content"><h3>Salted Caramel Cheesecake</h3></div></div> 
+            <div class="pizza-card"><img src="IMG_7190.jpeg" class="pizza-img"><div class="pizza-content"><h3>Cheese Garlic Bread</h3></div></div> 
+            <div class="pizza-card"><img src="IMG_7189.jpeg" class="pizza-img"><div class="pizza-content"><h3>Razza's Clamzone</h3></div></div> 
+            <div class="pizza-card"><img src="IMG_7191.jpeg" class="pizza-img"><div class="pizza-content"><h3>Meatballs & Burrata</h3></div></div> 
+        </div> 
+    </section> 
 
-        <div class="menu-grid" id="extras-grid">
-            <div class="pizza-card"><img src="IMG_7183.jpeg" class="pizza-img"><div class="pizza-content"><h3>Salted Caramel Cheesecake</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7190.jpeg" class="pizza-img"><div class="pizza-content"><h3>Cheese Garlic Bread</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7189.jpeg" class="pizza-img"><div class="pizza-content"><h3>Razza's Clamzone</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7191.jpeg" class="pizza-img"><div class="pizza-content"><h3>Meatballs & Burrata</h3></div></div>
-        </div>
-    </section>
+    <section id="story" style="background: var(--near-black);"> 
+        <div class="story-grid"> 
+            <div class="story-img"></div> 
+            <div> 
+                <h2 style="font-size: 3rem;" class="lang" data-pt="NASCIDA NO BRASIL. APERFEIÇOADA EM LISBOA." data-en="BORN IN BRAZIL. PERFECTED IN LISBON.">BORN IN BRAZIL. PERFECTED IN LISBON.</h2> 
+                <div class="pull-quote lang" data-pt='"A fila lá fora numa sexta-feira à noite é a única crítica que importa."' data-en='"The queue outside on a Friday night is the only review that matters."'>"The queue outside on a Friday night is the only review that matters."</div> 
+            </div> 
+        </div> 
+    </section> 
 
-    <section id="story" style="background: var(--near-black);">
-        <div class="story-grid">
-            <div class="story-img"></div>
-            <div>
-                <h2 style="font-size: 3rem;" class="lang" data-pt="NASCIDA NO BRASIL. APERFEIÇOADA EM LISBOA." data-en="BORN IN BRAZIL. PERFECTED IN LISBON.">BORN IN BRAZIL. PERFECTED IN LISBON.</h2>
-                <div class="pull-quote lang" data-pt='"A fila lá fora numa sexta-feira à noite é a única crítica que importa."' data-en='"The queue outside on a Friday night is the only review that matters."'>"The queue outside on a Friday night is the only review that matters."</div>
-            </div>
-        </div>
-    </section>
+    <section id="locations"> 
+        <h2 style="text-align: center; font-size: 3rem; margin-bottom: 40px;" class="lang" data-pt="ONDE ESTAMOS" data-en="FIND US">FIND US</h2> 
+        <div class="locations-grid"> 
+            <div class="loc-card"> 
+                <img src="IMG_7186.jpeg" class="loc-img"> 
+                <div class="loc-content"> 
+                    <h3>CAIS DO SODRÉ</h3> 
+                    <p>📍 Rua de S. Paulo 79, Lisboa</p> 
+                    <p>⏰ 12:00 – 15:30 | 18:30 – 23:00</p> 
+                </div> 
+            </div> 
+            <div class="loc-card"> 
+                <img src="IMG_7188.jpeg" class="loc-img"> 
+                <div class="loc-content"> 
+                    <h3>ALVALADE</h3> 
+                    <p>📍 Rua Acácio de Paiva 12, Lisboa</p> 
+                    <p>⏰ 12:30 – 15:30 | 18:30 – 23:00</p> 
+                </div> 
+            </div> 
+        </div> 
+    </section> 
 
-    <section id="locations">
-        <h2 style="text-align: center; font-size: 3rem; margin-bottom: 40px;" class="lang" data-pt="ONDE ESTAMOS" data-en="FIND US">FIND US</h2>
-        <div class="locations-grid">
-            <div class="loc-card">
-                <img src="IMG_7186.jpeg" class="loc-img">
-                <div class="loc-content">
-                    <h3>CAIS DO SODRÉ</h3>
-                    <p>📍 Rua de S. Paulo 79, Lisboa</p>
-                    <p>⏰ 12:00 – 15:30 | 18:30 – 23:00</p>
-                </div>
-            </div>
-            <div class="loc-card">
-                <img src="IMG_7188.jpeg" class="loc-img">
-                <div class="loc-content">
-                    <h3>ALVALADE</h3>
-                    <p>📍 Rua Acácio de Paiva 12, Lisboa</p>
-                    <p>⏰ 12:30 – 15:30 | 18:30 – 23:00</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <footer> 
+        <div class="footer-bottom lang" data-pt="© 2026 Lupita Pizzaria. Todos os direitos reservados." data-en="© 2026 Lupita Pizzaria. All rights reserved.">© 2026 Lupita Pizzaria. All rights reserved.</div> 
+    </footer> 
 
-    <footer>
-        <div class="footer-bottom lang" data-pt="© 2026 Lupita Pizzaria. Todos os direitos reservados." data-en="© 2026 Lupita Pizzaria. All rights reserved.">© 2026 Lupita Pizzaria. All rights reserved.</div>
-    </footer>
-
-    <script>
-        // Force Video Play para Safari/Mac
-        window.onload = function() {
-            var video = document.getElementById('hero-video');
-            if (video) {
-                video.muted = true;
-                video.play().catch(function(error) {
-                    console.log("Autoplay bloqueado pelo browser, a tentar forçar...");
-                });
-            }
-        };
-
-        function setLanguage(lang) {
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.innerText.toLowerCase() === lang) btn.classList.add('active');
-            });
-            document.querySelectorAll('.lang').forEach(el => {
-                const translation = el.getAttribute('data-' + lang);
-                if (translation) el.innerHTML = translation;
-            });
-        }
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        });
-        function filterMenu(category, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
-            document.getElementById(category + '-grid').classList.add('active');
-        }
-    </script>
-</body>
-</html>        a { text-decoration: none; color: inherit; transition: var(--transition); }
-        section { padding: 80px 20px; }
-
-        /* NAV STICKY */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            padding: 20px; display: flex; justify-content: space-between; align-items: center;
-            transition: var(--transition);
-        }
-        nav.scrolled { background: rgba(17, 17, 17, 0.95); border-bottom: 1px solid #333; padding: 12px 20px; }
-        .logo { font-family: var(--font-headline); font-size: 2rem; color: var(--accent-fire-orange); }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a:hover { color: var(--accent-fire-orange); }
-        
-        .lang-switcher { display: flex; gap: 10px; margin-right: 20px; font-family: var(--font-headline); cursor: pointer; }
-        .lang-btn { opacity: 0.5; transition: var(--transition); }
-        .lang-btn.active { opacity: 1; color: var(--accent-fire-orange); }
-        .nav-right { display: flex; align-items: center; }
-        .btn-delivery { background: var(--accent-fire-orange); color: white; padding: 10px 20px; font-weight: bold; border-radius: 4px; }
-
-        /* HERO SECTION COM VÍDEO */
-        .hero {
-            height: 100dvh;
-            width: 100%;
-            position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center;
-            overflow: hidden;
-        }
-        #hero-video {
-            position: absolute;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            z-index: -2;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
-        .hero h1 { font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 20px; }
-        .hero p { max-width: 520px; font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
-        .awards-strip { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; font-size: 0.9rem; }
-        .award-item { background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 20px; border: 1px solid rgba(212,168,66,0.3); backdrop-filter: blur(5px); transition: var(--transition); }
-        .award-item:hover { background: rgba(255,255,255,0.15); border-color: var(--accent-fire-orange); }
-        .cta-group { display: flex; gap: 15px; }
-        .btn-primary { background: var(--accent-fire-orange); padding: 15px 30px; font-weight: bold; border: none; cursor: pointer; color: white; }
-        .btn-secondary { border: 1px solid var(--text-broken-white); padding: 15px 30px; backdrop-filter: blur(5px); }
-
-        /* SOCIAL PROOF */
-        .social-proof { background: var(--near-black); }
-        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: var(--container-width); margin: 40px auto; }
-        .proof-card { padding: 30px; border-left: 4px solid var(--accent-warm-gold); background: rgba(255,255,255,0.02); }
-        .proof-card h3 { font-size: 1.5rem; color: var(--accent-fire-orange); margin-bottom: 10px; }
-
-        /* TICKER */
-        .ticker-wrap { width: 100%; overflow: hidden; background: var(--accent-fire-orange); padding: 15px 0; margin-top: 50px; }
-        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; }
-        .ticker span { font-family: var(--font-headline); font-size: 1.5rem; padding: 0 40px; color: var(--near-black); }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* MENU SECTION */
-        .menu-filter { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; }
-        .filter-btn { background: none; border: none; color: var(--text-broken-white); font-family: var(--font-headline); font-size: 1.5rem; cursor: pointer; opacity: 0.5; }
-        .filter-btn.active { opacity: 1; color: var(--accent-fire-orange); border-bottom: 2px solid var(--accent-fire-orange); }
-        .menu-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; max-width: var(--container-width); margin: auto; }
-        .menu-grid.active { display: grid; }
-        .pizza-card { background: rgba(255,255,255,0.03); position: relative; transition: var(--transition); border-radius: 12px; overflow: hidden; }
-        .pizza-card:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(232,89,60,0.2); }
-        .pizza-card .pizza-img { width: 100%; height: 550px; object-fit: cover; display: block; }
-        .pizza-card .pizza-content { padding: 25px; min-height: 180px; }
-
-        /* STORY SECTION */
-        .story-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; max-width: var(--container-width); margin: auto; align-items: center; }
-        .story-img { 
-            width: 100%; aspect-ratio: 3/4; background: #222; box-shadow: 20px 20px 0 var(--accent-fire-orange);
-            background-image: url('IMG_7187.jpeg');
-            background-size: cover; background-position: center;
-        }
-        .pull-quote { font-style: italic; font-size: 1.8rem; border-left: 4px solid var(--accent-fire-orange); padding-left: 20px; margin: 30px 0; color: var(--accent-warm-gold); }
-
-        /* LOCATIONS */
-        .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: var(--container-width); margin: auto; }
-        .loc-card { background: rgba(255,255,255,0.03); border-top: 4px solid var(--accent-fire-orange); border-radius: 12px; overflow: hidden; }
-        .loc-img { width: 100%; height: 300px; object-fit: cover; }
-        .loc-content { padding: 30px; }
-
-        /* FOOTER */
-        footer { background: var(--near-black); padding: 80px 20px 40px; border-top: 1px solid #222; text-align: center; }
-        .footer-bottom { margin-top: 60px; padding-top: 20px; border-top: 1px solid #222; font-size: 0.8rem; opacity: 0.6; }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .grid-2x2, .locations-grid, .story-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 4rem; }
-            .pizza-card .pizza-img { height: 400px; }
-        }
-    </style>
-</head>
-<body>
-
-    <nav id="navbar">
-        <div class="logo">LUPITA</div>
-        <div class="nav-links">
-            <a href="#home" class="lang" data-pt="Início" data-en="Home">Home</a>
-            <a href="#menu" class="lang" data-pt="Pizzas" data-en="Pizzas">Pizzas</a>
-            <a href="#story" class="lang" data-pt="História" data-en="Story">Story</a>
-            <a href="#locations" class="lang" data-pt="Onde Estamos" data-en="Find Us">Find Us</a>
-        </div>
-        <div class="nav-right">
-            <div class="lang-switcher">
-                <span class="lang-btn active" onclick="setLanguage('en')">EN</span>
-                <span style="opacity:0.3">|</span>
-                <span class="lang-btn" onclick="setLanguage('pt')">PT</span>
-            </div>
-            <a href="https://www.ubereats.com/pt-en/store/lupita-cais-do-sodre/cmuETQm-TIaf5rz35pa6mw?diningMode=DELIVERY&sc=SEARCH_SUGGESTION" target="_blank" class="btn-delivery lang" data-pt="Pedir Entrega" data-en="Order Delivery">Order Delivery</a>
-        </div>
-    </nav>
-
-    <section class="hero" id="home">
-        <!-- Otimizado com preload="auto" para carregar assim que a página abre -->
-        <video autoplay muted loop playsinline preload="auto" poster="IMG_7173.jpeg" id="hero-video">
-            <source src="videolupita.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <h1 class="lang" data-pt="A PIZZA MAIS OBSESSIVA DE LISBOA" data-en="LISBON'S MOST OBSESSED-OVER PIZZA">LISBON'S MOST OBSESSED-OVER PIZZA</h1>
-        <p class="lang" data-pt="Massa de fermentação natural. 90 segundos no forno. Top 50 na Europa." data-en="Naturally fermented dough. 90 seconds in the oven. Ranked Top 50 in Europe.">Naturally fermented dough. 90 seconds in the oven. Ranked Top 50 in Europe.</p>
-        <div class="awards-strip">
-            <span class="award-item">🏆 Top 50 Pizzas Europa 2024</span>
-            <a href="https://www.google.com/maps/place/Lupita/@38.7082606,-9.148636,17z/data=!4m6!3m5!1s0xd1935d933ad3a93:0x4b20d00d9c2d55ef!8m2!3d38.7082606!4d-9.1460611!16s%2Fg%2F11h_jz6zvs?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="award-item">⭐ 4.7 Reviews</a>
-        </div>
-        <div class="cta-group">
-            <a href="#locations" class="btn-primary lang" data-pt="ENCONTRAR" data-en="FIND US">FIND US</a>
-            <a href="#menu" class="btn-secondary lang" data-pt="MENU" data-en="VIEW MENU">VIEW MENU</a>
-        </div>
-    </section>
-
-    <section class="social-proof">
-        <h2 style="color: var(--accent-fire-orange); text-align: center; font-size: 3rem;" class="lang" data-pt="PORQUÊ A FILA VALE A PENA" data-en="WHY THE QUEUE IS WORTH IT">WHY THE QUEUE IS WORTH IT</h2>
-        <div class="grid-2x2">
-            <div class="proof-card">
-                <h3>#45 IN EUROPE</h3>
-                <p class="lang" data-pt="Top 50 Pizzas na Europa 2024." data-en="Top 50 Pizzas in Europe 2024.">Top 50 Pizzas in Europe 2024.</p>
-            </div>
-            <div class="proof-card">
-                <h3>TIME OUT</h3>
-                <p class="lang" data-pt='"Uma das melhores pizzas de ananás do mundo."' data-en='"One of the best pineapple pizzas in the world."'>"One of the best pineapple pizzas in the world."</p>
-            </div>
-            <div class="proof-card">
-                <h3>3,300+ REVIEWS</h3>
-                <p class="lang" data-pt="Classificação 4.7/5. O ponto de pizza mais amado de Lisboa." data-en="4.7/5 rating. The most loved pizza spot in Lisbon.">4.7/5 rating. The most loved pizza spot in Lisbon.</p>
-            </div>
-            <div class="proof-card">
-                <h3>ANTHONY FALCO</h3>
-                <p class="lang" data-pt="Consultoria do lendário pizzaiolo da Roberta's NYC." data-en="Consultancy from the legendary Roberta's NYC pizzaiolo.">Consultancy from the legendary Roberta's NYC pizzaiolo.</p>
-            </div>
-        </div>
-        <div class="ticker-wrap">
-            <div class="ticker">
-                <span>"Best pizza outside Italy" • "A fila vale a pena" • "The crust is magic" • "Best pizza outside Italy" • "A fila vale a pena" • "The crust is magic"</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="menu">
-        <h2 style="text-align: center; font-size: 4rem; margin-bottom: 40px;" class="lang" data-pt="AS PIZZAS" data-en="THE PIZZAS">THE PIZZAS</h2>
-        <div class="menu-filter">
-            <button class="filter-btn active lang" data-pt="PIZZAS" data-en="PIZZAS" onclick="filterMenu('pizzas', this)">PIZZAS</button>
-            <button class="filter-btn lang" data-pt="OUTROS" data-en="OTHERS" onclick="filterMenu('extras', this)">OTHERS</button>
-        </div>
-
-        <div class="menu-grid active" id="pizzas-grid">
-            <div class="pizza-card"><img src="IMG_7173.jpeg" class="pizza-img"><div class="pizza-content"><h3>Margherita</h3><p class="lang" data-pt="Tomate, mozzarella fresca, manjericão e azeite." data-en="Tomato, fresh mozzarella, basil and olive oil.">Tomato, fresh mozzarella, basil and olive oil.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7174.jpeg" class="pizza-img"><div class="pizza-content"><h3>Peperoni</h3><p class="lang" data-pt="Mozzarella, peperoni artesanal e um toque picante." data-en="Mozzarella, artisanal pepperoni and a spicy touch.">Mozzarella, artisanal pepperoni and a spicy touch.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7175.jpeg" class="pizza-img"><div class="pizza-content"><h3>Marinara</h3><p class="lang" data-pt="Tomate, alho, orégãos e azeite extra virgem." data-en="Tomato, garlic, oregano and extra virgin olive oil.">Tomato, garlic, oregano and extra virgin olive oil.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7176.jpeg" class="pizza-img"><div class="pizza-content"><h3>Branca</h3><p class="lang" data-pt="Base de queijos selecionados e ervas frescas." data-en="Selected cheese base and fresh herbs.">Selected cheese base and fresh herbs.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7177.jpeg" class="pizza-img"><div class="pizza-content"><h3>Vegan</h3><p class="lang" data-pt="Ingredientes 100% vegetais e sazonais." data-en="100% plant-based and seasonal ingredients.">100% plant-based and seasonal ingredients.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7178.jpeg" class="pizza-img"><div class="pizza-content"><h3>Ananas</h3><p class="lang" data-pt="A famosa pizza de ananás premiada mundialmente." data-en="The famous world-award-winning pineapple pizza.">The famous world-award-winning pineapple pizza.</p></div></div>
-            <div class="pizza-card"><img src="IMG_7179.jpeg" class="pizza-img"><div class="pizza-content"><h3>Cogumelos</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7180.jpeg" class="pizza-img"><div class="pizza-content"><h3>Spicy Amatriciana</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7181.jpeg" class="pizza-img"><div class="pizza-content"><h3>Courgette & Burrata</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7182.jpeg" class="pizza-img"><div class="pizza-content"><h3>Spicy Alla Vodka</h3></div></div>
-        </div>
-
-        <div class="menu-grid" id="extras-grid">
-            <div class="pizza-card"><img src="IMG_7183.jpeg" class="pizza-img"><div class="pizza-content"><h3>Salted Caramel Cheesecake</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7190.jpeg" class="pizza-img"><div class="pizza-content"><h3>Cheese Garlic Bread</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7189.jpeg" class="pizza-img"><div class="pizza-content"><h3>Razza's Clamzone</h3></div></div>
-            <div class="pizza-card"><img src="IMG_7191.jpeg" class="pizza-img"><div class="pizza-content"><h3>Meatballs & Burrata</h3></div></div>
-        </div>
-    </section>
-
-    <section id="story" style="background: var(--near-black);">
-        <div class="story-grid">
-            <div class="story-img"></div>
-            <div>
-                <h2 style="font-size: 3rem;" class="lang" data-pt="NASCIDA NO BRASIL. APERFEIÇOADA EM LISBOA." data-en="BORN IN BRAZIL. PERFECTED IN LISBON.">BORN IN BRAZIL. PERFECTED IN LISBON.</h2>
-                <div class="pull-quote lang" data-pt='"A fila lá fora numa sexta-feira à noite é a única crítica que importa."' data-en='"The queue outside on a Friday night is the only review that matters."'>"The queue outside on a Friday night is the only review that matters."</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="locations">
-        <h2 style="text-align: center; font-size: 3rem; margin-bottom: 40px;" class="lang" data-pt="ONDE ESTAMOS" data-en="FIND US">FIND US</h2>
-        <div class="locations-grid">
-            <div class="loc-card">
-                <img src="IMG_7186.jpeg" class="loc-img">
-                <div class="loc-content">
-                    <h3>CAIS DO SODRÉ</h3>
-                    <p>📍 Rua de S. Paulo 79, Lisboa</p>
-                    <p>⏰ 12:00 – 15:30 | 18:30 – 23:00</p>
-                </div>
-            </div>
-            <div class="loc-card">
-                <img src="IMG_7188.jpeg" class="loc-img">
-                <div class="loc-content">
-                    <h3>ALVALADE</h3>
-                    <p>📍 Rua Acácio de Paiva 12, Lisboa</p>
-                    <p>⏰ 12:30 – 15:30 | 18:30 – 23:00</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-bottom lang" data-pt="© 2026 Lupita Pizzaria. Todos os direitos reservados." data-en="© 2026 Lupita Pizzaria. All rights reserved.">© 2026 Lupita Pizzaria. All rights reserved.</div>
-    </footer>
-
-    <script>
-        function setLanguage(lang) {
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.innerText.toLowerCase() === lang) btn.classList.add('active');
-            });
-            document.querySelectorAll('.lang').forEach(el => {
-                const translation = el.getAttribute('data-' + lang);
-                if (translation) el.innerHTML = translation;
-            });
-        }
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        });
-        function filterMenu(category, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
-            document.getElementById(category + '-grid').classList.add('active');
-        }
-    </script>
-</body>
+    <script> 
+        function setLanguage(lang) { 
+            document.querySelectorAll('.lang-btn').forEach(btn => { 
+                btn.classList.remove('active'); 
+                if(btn.innerText.toLowerCase() === lang) btn.classList.add('active'); 
+            }); 
+            document.querySelectorAll('.lang').forEach(el => { 
+                const translation = el.getAttribute('data-' + lang); 
+                if (translation) el.innerHTML = translation; 
+            }); 
+        } 
+        window.addEventListener('scroll', () => { 
+            const nav = document.getElementById('navbar'); 
+            if (window.scrollY > 50) nav.classList.add('scrolled'); 
+            else nav.classList.remove('scrolled'); 
+        }); 
+        function filterMenu(category, btn) { 
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); 
+            btn.classList.add('active'); 
+            document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active')); 
+            document.getElementById(category + '-grid').classList.add('active'); 
+        } 
+    </script> 
+</body> 
 </html>
