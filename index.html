@@ -6,6 +6,9 @@
     <title>LUPITA — Lisbon's Most Obsessed-Over Pizza</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     
+    <!-- Otimização de carregamento do vídeo -->
+    <link rel="preload" href="videolupita.mp4" as="video" type="video/mp4">
+
     <style>
         /* DESIGN SYSTEM */
         :root {
@@ -156,7 +159,8 @@
     </nav>
 
     <section class="hero" id="home">
-        <video autoplay muted loop playsinline webkit-playsinline poster="IMG_7173.jpeg" id="hero-video">
+        <!-- Otimizado com preload="auto" para carregar assim que a página abre -->
+        <video autoplay muted loop playsinline preload="auto" poster="IMG_7173.jpeg" id="hero-video">
             <source src="videolupita.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
